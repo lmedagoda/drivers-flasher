@@ -5,15 +5,15 @@ int main(int argc, char** argv)
 {
     std::string device;
 //     double setpoint;
-    if (argc == 3){
+    if (argc == 2){
         device = argv[1];
     } else {
-        std::cout << "Usage: " << argv[0] << " <device> <pwm*1000>" << std::endl;
+        std::cout << "Usage: " << argv[0] << " <device>" << std::endl;
         return -1;
     }
     flasher::Driver driver;
     int fd;
-    fd = driver.openSerialIO(device, 115200);
+    fd = driver.openSerialIO(device, 57600);
     driver.setFileDescriptor(fd);
     flasher::Status status;
     base::Time timeout = base::Time().fromSeconds(10);

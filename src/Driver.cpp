@@ -74,7 +74,7 @@ void Driver::write(Command command, base::Time timeout)
      
      //light 1
      command_packet[0] = 'A';
-     command_packet[1] = '1';
+     command_packet[1] = '0';
      command_packet[2] = ',';
      if(command.light1 == true) {
 	command_packet[3] = '1';
@@ -86,7 +86,7 @@ void Driver::write(Command command, base::Time timeout)
      
      //light 2
      command_packet[6] = 'A';
-     command_packet[7] = '2';
+     command_packet[7] = '1';
      command_packet[8] = ',';
      if(command.light2 == true) {
 	command_packet[9] = '1';
@@ -98,7 +98,7 @@ void Driver::write(Command command, base::Time timeout)
      
      //light 3
      command_packet[12] = 'A';
-     command_packet[13] = '3';
+     command_packet[13] = '2';
      command_packet[14] = ',';
      if(command.light3 == true) {
 	command_packet[15] = '1';
@@ -152,6 +152,91 @@ uint8_t Driver::calculateCRC(uint8_t crc, uint8_t data) const
     }
 
     return crc;
+}
+
+void writeConfig(base::Time timeout)
+{
+  uint8_t config_packet[59];
+  
+     //light 1 mode
+     config_packet[0] = 'M';
+     config_packet[1] = '0';
+     config_packet[2] = ',';
+     config_packet[3] = '1';
+     config_packet[4] = 0x0D;
+     config_packet[5] = 0x0A;
+     
+     //light 2 mode
+     config_packet[6] = 'M';
+     config_packet[7] = '1';
+     config_packet[8] = ',';
+     config_packet[9] = '1';
+     config_packet[10] = 0x0D;
+     config_packet[11] = 0x0A;
+     
+     //light 3 mode
+     config_packet[12] = 'M';
+     config_packet[13] = '2';
+     config_packet[14] = ',';
+     config_packet[15] = '1';
+     config_packet[16] = 0x0D;
+     config_packet[17] = 0x0A;
+     
+     //light 1 voltage (x * 0.1 V)
+     config_packet[18] = 'U';
+     config_packet[19] = '0';
+     config_packet[20] = ',';
+     config_packet[21] = '3';
+     config_packet[22] = '6';
+     config_packet[23] = '0';
+     config_packet[24] = 0x0D;
+     config_packet[25] = 0x0A;
+     
+     //light 2 voltage
+     config_packet[26] = 'U';
+     config_packet[27] = '1';
+     config_packet[28] = ',';
+     config_packet[29] = '3';
+     config_packet[30] = '6';
+     config_packet[31] = '0';
+     config_packet[32] = 0x0D;
+     config_packet[33] = 0x0A;
+     
+     //light 3 voltage
+     config_packet[34] = 'U';
+     config_packet[35] = '2';
+     config_packet[36] = ',';
+     config_packet[37] = '2';
+     config_packet[38] = '5';
+     config_packet[39] = 0x0D;
+     config_packet[40] = 0x0A;
+     
+     //light 1 current
+     config_packet[41] = 'I';
+     config_packet[42] = '0';
+     config_packet[43] = ',';
+     config_packet[44] = '1';
+     config_packet[45] = 0x0D;
+     config_packet[46] = 0x0A;
+     
+     //light 2 current
+     config_packet[47] = 'I';
+     config_packet[48] = '1';
+     config_packet[49] = ',';
+     config_packet[50] = '1';
+     config_packet[51] = 0x0D;
+     config_packet[52] = 0x0A;
+     
+     //light 3 current
+     config_packet[53] = 'I';
+     config_packet[54] = '2';
+     config_packet[55] = ',';
+     config_packet[56] = '1';
+     config_packet[57] = 0x0D;
+     config_packet[58] = 0x0A;
+  
+  writePacket(config_packet, 59, timeout);
+  
 }
 
 

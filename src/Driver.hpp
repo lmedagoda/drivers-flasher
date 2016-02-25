@@ -35,14 +35,21 @@ namespace flasher
         public:
             Driver();
             /*
-             * Thist method reads the curret status from the maxon_uc and returned it in the status object
+             * Thist method reads the curret status from the flasher and returned it in the status object
              */
             bool read(Status &staus, base::Time timeout);
             
             /*
-             * This mthod writes the data from the command to the maxon_uc
+             * This method writes the data from the command to the flasher
              * */
             void write(Command command, base::Time timeout);
+	    
+	    /*
+             * This method configures the flasher
+             * */
+            void writeConfig(base::Time timeout);
+	    
+	    
 
     };
 }
