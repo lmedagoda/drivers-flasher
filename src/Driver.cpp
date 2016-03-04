@@ -154,7 +154,7 @@ uint8_t Driver::calculateCRC(uint8_t crc, uint8_t data) const
     return crc;
 }
 
-void writeConfig(base::Time timeout)
+void Driver::writeConfig(base::Time timeout)
 {
   uint8_t config_packet[59];
   
