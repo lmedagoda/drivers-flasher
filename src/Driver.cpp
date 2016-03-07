@@ -72,6 +72,8 @@ void Driver::write(Command command, base::Time timeout)
 {
      uint8_t command_packet[18];
      
+     std::cout << "Light states: ";
+     
      //light 1
      command_packet[0] = 'A';
      command_packet[1] = '0';
@@ -80,9 +82,11 @@ void Driver::write(Command command, base::Time timeout)
 	command_packet[3] = '1';
      } else {
 	command_packet[3] = '0';
+
      }
      command_packet[4] = 0x0D;
      command_packet[5] = 0x0A;
+     std::cout << command_packet[3] << " ";
      
      //light 2
      command_packet[6] = 'A';
@@ -95,6 +99,7 @@ void Driver::write(Command command, base::Time timeout)
      }
      command_packet[10] = 0x0D;
      command_packet[11] = 0x0A;
+     std::cout << command_packet[9] << " ";
      
      //light 3
      command_packet[12] = 'A';
@@ -107,6 +112,7 @@ void Driver::write(Command command, base::Time timeout)
      }
      command_packet[16] = 0x0D;
      command_packet[17] = 0x0A;
+     std::cout << command_packet[15] << " " << std::endl;
      
      
      writePacket(command_packet, 18, timeout);

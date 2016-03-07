@@ -2,6 +2,8 @@
 #define FLASHER_DRIVER_HPP
 
 #include <iodrivers_base/Driver.hpp>
+#include <iostream>
+
 namespace flasher
 {
 
