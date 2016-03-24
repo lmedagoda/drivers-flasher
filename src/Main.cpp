@@ -14,9 +14,10 @@ int main(int argc, char** argv)
     flasher::Driver driver;
     int fd;
     fd = driver.openSerialIO(device, 57600);
+	std::cout << "Device set: " << argv[1] << std::endl;
     driver.setFileDescriptor(fd);
     flasher::Status status;
-    base::Time timeout = base::Time().fromSeconds(10);
+    base::Time timeout = base::Time().fromSeconds(10000000000);
     
     flasher::Command cmd;
     cmd.light1 = false;
@@ -24,7 +25,7 @@ int main(int argc, char** argv)
     cmd.light3 = false;
 
     while(driver.read(status, timeout)){
-        std::cout << "Light states: " << status.light1 << " "<< status.light2 << " "<< status.light3 << std::endl;
+        std::cout << "Light states (in main): " << status.light1 << " "<< status.light2 << " "<< status.light3 << std::endl;
         
         driver.write(cmd, timeout);
     }

@@ -1,20 +1,23 @@
 #include <flasher/Driver.hpp>
 #include <iostream>
 #include <cmath>
+#include <sstream>
+
 
 using namespace flasher;
 
 Driver::Driver()
-    : iodrivers_base::Driver(20)
+    : iodrivers_base::Driver(200)
 {
-    buffer.resize(20);
+    buffer.resize(200);
 }
 
 
 int Driver::extractPacket(uint8_t const *buffer, size_t buffer_size) const
 {
-//     for (unsigned i = 0; i < buffer_size; i++)
-//     {
+     for (unsigned i = 0; i < buffer_size; i++)
+     {
+	std::cout << buffer[i] << std::flush;
 //         if (buffer[i] == START_SIGN)
 //         {
 //             if (i > 0)
@@ -35,7 +38,7 @@ int Driver::extractPacket(uint8_t const *buffer, size_t buffer_size) const
 // 
 //         }
 // 
-//     }
+     }
     return -buffer_size;
 }
 
@@ -70,52 +73,38 @@ bool Driver::read(Status &status, base::Time timeout)
 
 void Driver::write(Command command, base::Time timeout)
 {
-     uint8_t command_packet[18];
-     
-     std::cout << "Light states: ";
-     
-     //light 1
-     command_packet[0] = 'A';
-     command_packet[1] = '0';
-     command_packet[2] = ',';
+     std::string string;
+    /*
      if(command.light1 == true) {
-	command_packet[3] = '1';
+	string = "A0,1\r\n";
      } else {
-	command_packet[3] = '0';
+	string = "A0,0\r\n";
+     }
 
-     }
-     command_packet[4] = 0x0D;
-     command_packet[5] = 0x0A;
-     std::cout << command_packet[3] << " ";
+     std::cout << string << std::endl;	
+    
+     writePacket((uint8_t*)string.c_str(), string.size(), timeout);
      
-     //light 2
-     command_packet[6] = 'A';
-     command_packet[7] = '1';
-     command_packet[8] = ',';
      if(command.light2 == true) {
-	command_packet[9] = '1';
+	string = "A1,1\r\n";
      } else {
-	command_packet[9] = '0';
+	string = "A1,0\r\n";
      }
-     command_packet[10] = 0x0D;
-     command_packet[11] = 0x0A;
-     std::cout << command_packet[9] << " ";
-     
-     //light 3
-     command_packet[12] = 'A';
-     command_packet[13] = '2';
-     command_packet[14] = ',';
+
+     std::cout << string << std::endl;	
+    
+     writePacket((uint8_t*)string.c_str(), string.size(), timeout);*/
+
      if(command.light3 == true) {
-	command_packet[15] = '1';
+	string = "A2,1\r\n";
      } else {
-	command_packet[15] = '0';
+	string = "A2,0\r\n";
      }
-     command_packet[16] = 0x0D;
-     command_packet[17] = 0x0A;
-     std::cout << command_packet[15] << " " << std::endl;
-     
-     
-     writePacket(command_packet, 18, timeout);
+
+     std::cout << "Length: " << string.size() << std::endl;	
+     std::cout << string << std::endl;	
+    
+     writePacket((uint8_t*)string.c_str(), 6, timeout);
      
      
 //     command_packet[0] = START_SIGN;
